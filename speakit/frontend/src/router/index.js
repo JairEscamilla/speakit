@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
+import Login from '../components/users/Login.vue'
+import Feed from '../components/users/Feed.vue'
 
 Vue.use(VueRouter)
 
@@ -10,6 +11,11 @@ Vue.use(VueRouter)
     name: 'Login',
     component: Login
   },
+  {
+    path: "/feed/",
+    name: 'feed',
+    component: Feed
+  }
 ]
 
 const router = new VueRouter({

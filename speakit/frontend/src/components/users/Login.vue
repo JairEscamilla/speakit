@@ -35,7 +35,7 @@
                     password: this.form.password
                 }).then((response) => {
                     this.token = response.data.token;
-                    alert("Bienvenido a speakit!");
+                    window.location.href = "/feed";
                 }).catch(() => {
                     alert("Verifica que tus datos sean correctos");
                 })
