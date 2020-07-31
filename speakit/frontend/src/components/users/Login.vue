@@ -1,16 +1,29 @@
 <template>
     <div>
-        <form @submit.prevent="submitForm">
-            <div>
-                <label for="username">Username: </label>
-                <input type="text" name="username" id="username" v-model="form.username">
-            </div>
-            <div>
-                <label for="password">Password: </label>
-                <input type="password" name="password" id="password" v-model="form.password">
-            </div>
-            <button type="submit">Entrar</button>
-        </form>
+        <v-app id="login"> 
+            <v-container>
+                <v-row>
+                    <v-col class="col-12">
+                        <v-card class="mx-auto" max-width="90%">
+                            <v-card-text>
+                                <div class="display-1 text--primary">
+                                    Inica sesión
+                                </div>
+                                <form class="mt-4" @submit.prevent="submitForm">
+                                    <div>
+                                        <v-text-field label="Username" v-model="form.username"></v-text-field>
+                                    </div>
+                                    <div>
+                                        <v-text-field label="Password" type="password" v-model="form.password"></v-text-field>
+                                    </div>
+                                    <v-btn color="primary" type="submit">Iniciar sesión</v-btn>
+                                </form>
+                            </v-card-text>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-app>
     </div>
 </template>
 
@@ -39,7 +52,7 @@
                 }).catch(() => {
                     alert("Verifica que tus datos sean correctos");
                 })
-            }
+            },
         },
     }
 </script>
