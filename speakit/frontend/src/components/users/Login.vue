@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-app id="login"> 
-            <v-container>
+            <v-container class="">
                 <v-row>
                     <v-col class="col-12">
                         <v-card class="mx-auto" max-width="90%">
