@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/users/Login.vue'
 import Feed from '../components/users/Feed.vue'
+import Registration from '../components/users/Registration.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ Vue.use(VueRouter)
     path: "/feed/",
     name: 'feed',
     component: Feed
+  },
+  {
+    path: "/registration/",
+    name: "registration",
+    component: Registration
   }
 ]
 
