@@ -68,11 +68,15 @@
                         value => (value || '').length >= 5 || 'Min 5 characters'
                     ],
                     password_confirmation: [
-                        value => !(value != this.form.password) || 'Password confirmation is wrong'
+                        value => {
+                            this.password_confirmation_is_validated = value === this.form.password;
+                            return !(value != this.form.password) || 'Password confirmation is wrong'
+                        }
                     ]
                 },
                 token: "",
-                username_is_validated: false
+                username_is_validated: false,
+                password_confirmation_is_validated: false
             }
         },
         watch: {
@@ -97,6 +101,8 @@
         methods: {
             submitForm(){
                 const API = "http://localhost:8000/api/v1.0/register/";
+                if(!this.password_confirmation_is_validated)
+                    return;
                 axios.post(API, {
                    username: this.username,
                    email: this.form.email,
