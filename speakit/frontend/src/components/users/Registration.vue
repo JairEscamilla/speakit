@@ -39,6 +39,7 @@
 
 <script>
     import axios from 'axios';
+    import swal from 'sweetalert'
     export default{
         data() {
             return {
@@ -79,10 +80,10 @@
                    email: this.form.email,
                    password: this.form.password 
                 }).then((response) => {
-                    alert("Se ha registrado con éxito el nuevo usuario")
+                    swal("Se ha registrado con éxito el nuevo usuario", "", "success")
                     this.token = response.data.token;
                 }).catch((error) => {
-                    alert("Ha ocurrido un error");
+                    swal("Verifica que tus datos sean correctos", "", "error")
                     console.log(error);
                 })
             }
