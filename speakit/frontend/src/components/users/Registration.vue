@@ -5,12 +5,12 @@
                 <v-col class="col-12">
                     <v-card class="mx-auto" max-width="90%">
                         <v-card-title>
-                            ¡Register now!
+                            Register now!
                         </v-card-title>
                         <v-card-text>
                             <form @submit.prevent="submitForm">
                                 <div>
-                                    <v-text-field label="Username" v-model="form.username" :rules="rules.username">
+                                    <v-text-field label="Username" v-model="form.username" @keyup="validateUsername">
                                     </v-text-field>
                                 </div>
                                 <div>
@@ -52,7 +52,8 @@
                 rules: {
                     username: [
                         value => !!value || 'Required',
-                        value => (value || '').length <= 100 || 'Max 100 characters'
+                        value => (value || '').length <= 100 || 'Max 100 characters',
+                        value => (this.validateUsername(value)) || 'Username is already taken'
                     ],
                     email: [
                         value => !!value || 'Required',
@@ -69,7 +70,8 @@
                         value => !(value != this.form.password) || 'Password confirmation is wrong'
                     ]
                 },
-                token: ""
+                token: "",
+                username_is_validated: Boolean
             }
         },
         methods: {
@@ -86,7 +88,26 @@
                     swal("Verifica que tus datos sean correctos", "", "error")
                     console.log(error);
                 })
-            }
+            },
+            
+            validateUsername(){
+                const API = "http://localhost:8000/api/v1.0/validate_username/";
+
+                var payload = {
+                    username: "jair"
+                };
+
+                var data = new FormData();
+                data.append("json", JSON.stringify(payload));
+
+                fetch(API,
+                    {
+                        method: "POST",
+                        body: data
+                    })
+                    .then(function (res) { return res.json(); })
+                    .then(function (data) { alert(JSON.stringify(data)) })
+            },
         },
     }
 </script>

@@ -9,7 +9,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as knoxLoginView
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
-
+import json
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 # Register API
@@ -39,8 +39,10 @@ class LoginApi(knoxLoginView):
 class ValidateUsernameApi(APIView):   
     def post(self, request, *args, **kwargs):
         response = {}
-        username = request.POST.get('username')
-        response['validated'] = not User.objects.filter(username=username).exists()
+        peticion = request.POST.get('json')
+        data = json.loads(peticion)
+        username = data['username']
+        response['validado'] = not User.objects.filter(username=username).exists()
         return Response(response)
 
 class Prueba(APIView):
