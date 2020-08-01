@@ -42,7 +42,8 @@ class ValidateUsernameApi(APIView):
         peticion = request.POST.get('json')
         data = json.loads(peticion)
         username = data['username']
-        response['validado'] = not User.objects.filter(username=username).exists()
+        print(username)
+        response['validated'] = not User.objects.filter(username=username).exists()
         return Response(response)
 
 class Prueba(APIView):

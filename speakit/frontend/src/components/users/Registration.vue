@@ -10,7 +10,7 @@
                         <v-card-text>
                             <form @submit.prevent="submitForm">
                                 <div>
-                                    <v-text-field label="Username" v-model="form.username" @keyup="validateUsername">
+                                    <v-text-field autocomplete="off" label="Username" v-model="username" :error-messages="username_errors" :rules="rules.username">
                                     </v-text-field>
                                 </div>
                                 <div>
@@ -43,17 +43,18 @@
     export default{
         data() {
             return {
+                username: "",
                 form: {
                     username: "",
                     email: "",
                     password: "",
                     password_confirmation: ""
                 },
+                username_errors: [],
                 rules: {
                     username: [
                         value => !!value || 'Required',
                         value => (value || '').length <= 100 || 'Max 100 characters',
-                        value => (this.validateUsername(value)) || 'Username is already taken'
                     ],
                     email: [
                         value => !!value || 'Required',
@@ -71,14 +72,33 @@
                     ]
                 },
                 token: "",
-                username_is_validated: Boolean
+                username_is_validated: false
+            }
+        },
+        watch: {
+            username(val){
+                const API = "http://localhost:8000/api/v1.0/validate_username/";
+                this.username_errors = [];
+                var info = {username: val}
+                var data = new FormData();
+                data.append("json", JSON.stringify(info))
+                
+                fetch(API, {
+                    method: "POST",
+                    body: data
+                }).then((response) => response.json())
+                .then((data) => {
+                    const username_is_validated = data.validated;
+                    if(!username_is_validated)
+                        this.username_errors.push("Username is already taken")
+                })
             }
         },
         methods: {
             submitForm(){
                 const API = "http://localhost:8000/api/v1.0/register/";
                 axios.post(API, {
-                   username: this.form.username,
+                   username: this.username,
                    email: this.form.email,
                    password: this.form.password 
                 }).then((response) => {
@@ -88,25 +108,6 @@
                     swal("Verifica que tus datos sean correctos", "", "error")
                     console.log(error);
                 })
-            },
-            
-            validateUsername(){
-                const API = "http://localhost:8000/api/v1.0/validate_username/";
-
-                var payload = {
-                    username: "jair"
-                };
-
-                var data = new FormData();
-                data.append("json", JSON.stringify(payload));
-
-                fetch(API,
-                    {
-                        method: "POST",
-                        body: data
-                    })
-                    .then(function (res) { return res.json(); })
-                    .then(function (data) { alert(JSON.stringify(data)) })
             },
         },
     }
