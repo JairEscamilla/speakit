@@ -128,6 +128,8 @@
                 }).then((response) => {
                     swal("Se ha registrado con éxito el nuevo usuario", "", "success")
                     this.token = response.data.token;
+                    this.$store.commit('update_auth_token', this.token);
+                    console.log(this.$store.state.auth_token);
                 }).catch((error) => {
                     swal("Verifica que tus datos sean correctos", "", "error")
                     console.log(error);
