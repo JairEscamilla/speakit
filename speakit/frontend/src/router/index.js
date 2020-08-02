@@ -3,8 +3,15 @@ import VueRouter from 'vue-router'
 import Login from '../components/users/Login.vue'
 import Feed from '../components/users/Feed.vue'
 import Registration from '../components/users/Registration.vue'
-
+import store from '../store.js'
 Vue.use(VueRouter)
+
+const user_is_authenticated = (to, from, next) => {
+  if(store.state.user_is_logged)
+    next();
+  else
+    next({name: "Login"})
+}
 
   const routes = [
   {
@@ -15,7 +22,8 @@ Vue.use(VueRouter)
   {
     path: "/feed/",
     name: 'feed',
-    component: Feed
+    component: Feed,
+    beforeEnter: user_is_authenticated
   },
   {
     path: "/registration/",
@@ -29,5 +37,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
 
 export default router

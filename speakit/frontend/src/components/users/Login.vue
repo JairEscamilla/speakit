@@ -49,6 +49,8 @@
                 }).then((response) => {
                     this.token = response.data.token;
                     this.$store.commit('update_auth_token', this.token)
+                    this.$store.commit('set_username', this.form.username)
+                    this.$store.commit('set_user_is_logged', true)
                     this.$router.push({name: "feed"});
                 }).catch(() => {
                     alert("Verifica que tus datos sean correctos");

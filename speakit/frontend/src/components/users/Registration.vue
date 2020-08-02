@@ -129,8 +129,6 @@
                     this.token = response.data.token;
                     this.$store.commit('update_auth_token', this.token);
                     this.$router.push({name: "feed"})
-                    //console.log(this.$store.state.token);
-                    //window.location.href = "/feed/";
                 }).catch((error) => {
                     swal("Verifica que tus datos sean correctos", "", "error")
                     console.log(error);
