@@ -46,6 +46,17 @@ class ValidateUsernameApi(APIView):
         response['validated'] = not User.objects.filter(username=username).exists()
         return Response(response)
 
+class ValidateEmailApi(APIView):
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        peticion = request.POST.get('json')
+        data = json.loads(peticion)
+        email = data['email']
+        response['validated'] = not User.objects.filter(email=email).exists()
+        return Response(response)
+
+
 class Prueba(APIView):
     permission_classes = (IsAuthenticated, )
     def get(self, request):

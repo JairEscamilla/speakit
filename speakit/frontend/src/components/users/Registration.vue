@@ -14,7 +14,7 @@
                                     </v-text-field>
                                 </div>
                                 <div>
-                                    <v-text-field label="Email" v-model="form.email" :rules="rules.email">
+                                    <v-text-field label="Email" v-model="email" :rules="rules.email" :error-messages="email_errors">
                                     </v-text-field>
                                 </div>
                                 <div>
@@ -44,13 +44,14 @@
         data() {
             return {
                 username: "",
+                email: "",
                 form: {
-                    username: "",
                     email: "",
                     password: "",
                     password_confirmation: ""
                 },
                 username_errors: [],
+                email_errors: [],
                 rules: {
                     username: [
                         value => !!value || 'Required',
@@ -76,7 +77,8 @@
                 },
                 token: "",
                 username_is_validated: false,
-                password_confirmation_is_validated: false
+                password_confirmation_is_validated: false,
+                email_is_validated: false
             }
         },
         watch: {
@@ -92,16 +94,33 @@
                     body: data
                 }).then((response) => response.json())
                 .then((data) => {
-                    const username_is_validated = data.validated;
-                    if(!username_is_validated)
+                    this.username_is_validated = data.validated;
+                    if(!this.username_is_validated)
                         this.username_errors.push("Username is already taken")
+                })
+            },
+            email(val){
+                const API = "http://localhost:8000/api/v1.0/validate_email/";
+                this.email_errors = [];
+                var info = {email: val}
+                var data = new FormData();
+                data.append("json", JSON.stringify(info));
+
+                fetch(API, {
+                    method: "POST",
+                    body: data
+                }).then((response) => response.json())
+                .then((data) => {
+                    this.email_is_validated = data.validated;
+                    if(!this.email_is_validated)
+                        this.email_errors.push("Email  is already taken")
                 })
             }
         },
         methods: {
             submitForm(){
                 const API = "http://localhost:8000/api/v1.0/register/";
-                if(!this.password_confirmation_is_validated)
+                if(!this.password_confirmation_is_validated || !this.email_is_validated || !this.username_is_validated)
                     return;
                 axios.post(API, {
                    username: this.username,
