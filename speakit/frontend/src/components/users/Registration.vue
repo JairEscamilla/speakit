@@ -46,7 +46,6 @@
                 username: "",
                 email: "",
                 form: {
-                    email: "",
                     password: "",
                     password_confirmation: ""
                 },
@@ -124,7 +123,7 @@
                     return;
                 axios.post(API, {
                    username: this.username,
-                   email: this.form.email,
+                   email: this.email,
                    password: this.form.password 
                 }).then((response) => {
                     swal("Se ha registrado con éxito el nuevo usuario", "", "success")
