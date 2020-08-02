@@ -119,17 +119,18 @@
         methods: {
             submitForm(){
                 const API = "http://localhost:8000/api/v1.0/register/";
-                if(!this.password_confirmation_is_validated || !this.email_is_validated || !this.username_is_validated)
+                if(!this.password_confirmation_is_validated || !this.email_is_validated || !this.username_is_validated || this.form.password.length < 5)
                     return;
                 axios.post(API, {
                    username: this.username,
                    email: this.email,
                    password: this.form.password 
                 }).then((response) => {
-                    swal("Se ha registrado con éxito el nuevo usuario", "", "success")
                     this.token = response.data.token;
                     this.$store.commit('update_auth_token', this.token);
-                    console.log(this.$store.state.auth_token);
+                    this.$router.push({name: "feed"})
+                    //console.log(this.$store.state.token);
+                    //window.location.href = "/feed/";
                 }).catch((error) => {
                     swal("Verifica que tus datos sean correctos", "", "error")
                     console.log(error);

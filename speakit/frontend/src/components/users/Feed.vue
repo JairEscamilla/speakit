@@ -1,7 +1,7 @@
 <template>
     <div>
         Bienvenido a speakit!
-        {{message}}
+        {{$store.state.token}}
     </div>
 </template>
 
@@ -13,7 +13,8 @@
             }
         },
         created() {
-            alert("Bienvenido al sistema");
+            console.log(this.$store.state.token);
+            console.log("hello");
         },
     }
 </script>

@@ -48,7 +48,8 @@
                     password: this.form.password
                 }).then((response) => {
                     this.token = response.data.token;
-                    window.location.href = "/feed";
+                    this.$store.commit('update_auth_token', this.token)
+                    this.$router.push({name: "feed"});
                 }).catch(() => {
                     alert("Verifica que tus datos sean correctos");
                 })
