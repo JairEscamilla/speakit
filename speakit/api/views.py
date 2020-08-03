@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer
+from .serializers import UserSerializer, RegisterSerializer, PostSerializer
 from django.contrib.auth import login
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -12,6 +12,8 @@ from rest_framework.views import APIView
 import json
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
+from posts.models import Post
 # Register API
 
 class RegisterAPI(generics.GenericAPIView):
@@ -56,6 +58,21 @@ class ValidateEmailApi(APIView):
         response['validated'] = not User.objects.filter(email=email).exists()
         return Response(response)
 
+class GetUserIdApi(APIView):
+    permission_classes = (IsAuthenticated, )
+    def post(self, request, *args, **kwargs):
+        response = {}
+        peticion = request.POST.get('json')
+        data = json.loads(peticion)
+        username = data['username']
+        response['id'] = User.objects.filter(username=username).first().id 
+        return Response(response)
+        
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    #permission_classes = (IsAuthenticated, )
 
 class Prueba(APIView):
     permission_classes = (IsAuthenticated, )

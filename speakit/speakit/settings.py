@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'knox',
-    'corsheaders'
+    'corsheaders',
+    'posts'
 ]
 
 REST_FRAMEWORK = {

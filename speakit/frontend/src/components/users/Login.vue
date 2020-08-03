@@ -16,7 +16,7 @@
                                     <div>
                                         <v-text-field label="Password" type="password" v-model="form.password"></v-text-field>
                                     </div>
-                                    <v-btn color="primary" type="submit">Iniciar sesión</v-btn>
+                                    <v-btn color="primary" type="submit" :loading="loader" :disabled="loader">Iniciar sesión</v-btn>
                                 </form>
                             </v-card-text>
                         </v-card>
@@ -37,11 +37,13 @@
                     username: "",
                     password: ""
                 },
-                token: ""
+                token: "",
+                loader: false
             }
         },
         methods: {
             submitForm(){
+                this.loader = true
                 const API = "http://127.0.0.1:8000/api/v1.0/login/";
                 axios.post(API, {
                     username: this.form.username,
@@ -51,9 +53,23 @@
                     this.$store.commit('update_auth_token', this.token)
                     this.$store.commit('set_username', this.form.username)
                     this.$store.commit('set_user_is_logged', true)
-                    this.$router.push({name: "feed"});
+                    var info = {username: this.form.username}
+                    var data = new FormData();
+                    data.append("json", JSON.stringify(info))
+                    fetch(this.$store.state.api + 'get_user_id/', {
+                        method: "POST",
+                        body: data,
+                        headers: {
+                            Authorization: 'Token ' + this.$store.state.token
+                        }
+                    }).then((response) => response.json())
+                    .then((data) => {
+                        this.$store.commit('set_user_id', data.id);
+                        this.$router.push({ name: "feed" });
+                    })
                 }).catch(() => {
                     alert("Verifica que tus datos sean correctos");
+                    this.loader = false
                 })
             },
         },
