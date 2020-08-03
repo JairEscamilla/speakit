@@ -82,13 +82,12 @@
         },
         watch: {
             username(val){
-                const API = "http://localhost:8000/api/v1.0/validate_username/";
                 this.username_errors = [];
                 var info = {username: val}
                 var data = new FormData();
                 data.append("json", JSON.stringify(info))
                 
-                fetch(API, {
+                fetch(this.$store.state.api + 'validate_username/', {
                     method: "POST",
                     body: data
                 }).then((response) => response.json())
@@ -99,13 +98,12 @@
                 })
             },
             email(val){
-                const API = "http://localhost:8000/api/v1.0/validate_email/";
                 this.email_errors = [];
                 var info = {email: val}
                 var data = new FormData();
                 data.append("json", JSON.stringify(info));
 
-                fetch(API, {
+                fetch(this.$store.state.api + 'validate_email/', {
                     method: "POST",
                     body: data
                 }).then((response) => response.json())
@@ -118,16 +116,18 @@
         },
         methods: {
             submitForm(){
-                const API = "http://localhost:8000/api/v1.0/register/";
                 if(!this.password_confirmation_is_validated || !this.email_is_validated || !this.username_is_validated || this.form.password.length < 5)
                     return;
-                axios.post(API, {
+                axios.post(this.$store.state.api + 'register/', {
                    username: this.username,
                    email: this.email,
                    password: this.form.password 
                 }).then((response) => {
                     this.token = response.data.token;
                     this.$store.commit('update_auth_token', this.token);
+                    this.$store.commit('set_username', this.username)
+                    this.$store.commit('set_user_is_logged', true)
+                    this.$store.commit('set_user_id', response.data.user.id)
                     this.$router.push({name: "feed"})
                 }).catch((error) => {
                     swal("Verifica que tus datos sean correctos", "", "error")

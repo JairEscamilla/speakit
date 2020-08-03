@@ -44,8 +44,7 @@
         methods: {
             submitForm(){
                 this.loader = true
-                const API = "http://127.0.0.1:8000/api/v1.0/login/";
-                axios.post(API, {
+                axios.post(this.$store.state.api + 'login/', {
                     username: this.form.username,
                     password: this.form.password
                 }).then((response) => {
