@@ -13,6 +13,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default{
         data() {
             return {
@@ -23,7 +24,20 @@
         methods: {
             sendForm(){
                 this.loader=true;
-                console.log(this.post);
+                axios.post(this.$store.state.api + 'posts/', {
+                    post: this.post,
+                    user: this.$store.state.user_id,
+                    headers: {
+                        Authorization: 'Token ' + this.$store.state.token
+                    }
+                }).then((data) => {
+                    this.loader = false
+                    this.post = ""
+                    this.$emit('clicked', data)
+                }).catch(() => {
+                    console.log("Ha ocurrido un error");
+                    this.loader = false
+                })
             }
         },
     }

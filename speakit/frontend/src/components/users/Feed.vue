@@ -1,18 +1,19 @@
 <template>
     <div>
-        Bienvenido a speakit {{ $store.state.username }}!
-        <p>
-            user is logged? {{ $store.state.user_is_logged }}
-        </p>
+        <template v-for="(notification, index) in notifications">
+            <v-alert type="success" dismissible :key="index">
+                {{ notification }}
+            </v-alert>
+        </template>
         <v-container>
             <v-row no-glutters>
-                <v-col cols="2">
+                <v-col cols="2" class="links">
                     asd
                 </v-col>
                 <v-col cols="12" md="7" > 
-                    <NuevoPost/>
+                    <NuevoPost @clicked="updatePosts"></NuevoPost>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="2" class="links">
                     NUevos links
                 </v-col>
             </v-row>
@@ -25,7 +26,6 @@
                 </li>
             </ul>
         </div>
-        {{$store.state.token}}
         <v-btn color="error" @click="logout">Logout</v-btn>
     </div>
 </template>
@@ -37,14 +37,15 @@
         data() {
             return {
                 message: "Welcome",
-                posts: []
+                posts: [],
+                notifications: []
             }
         },
         components: {
             NuevoPost
         },
         created() {
-            console.log(this.$store.state.token);
+            console.log(this.$store.state.user_id);
             axios.get(this.$store.state.api + 'posts/', {
                 headers: {
                     Authorization: 'Token ' + this.$store.state.token
@@ -62,7 +63,27 @@
                 this.$store.commit('set_username', '')
                 this.$store.commit('set_user_is_logged', false)
                 this.$router.push({name: "Login"})
+            },
+            updatePosts(value) {
+                console.log("Vamos a actualizar los posts");
+                var post = {
+                    id: value.data.id,
+                    post: value.data.post, 
+                    user: value.data.user,
+                    created_at: value.data.created_at
+                }
+                this.posts.unshift(post)
+                this.notifications.push("Post was created successfully")
             }
         },
+        
     }
 </script>
+
+<style>
+    @media screen and (max-width: 800px){
+        .links{
+            display: none;
+        }
+    }
+</style>

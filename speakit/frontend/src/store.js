@@ -9,7 +9,7 @@ const store = new Vuex.Store({
         username: "",
         user_is_logged: false,
         api: "http://localhost:8000/api/v1.0/",
-        user_id: 0
+        user_id: 0,
     },
     mutations: {
         update_auth_token(state, token){
