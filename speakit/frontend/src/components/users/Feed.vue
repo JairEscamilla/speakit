@@ -11,7 +11,7 @@
                     asd
                 </v-col>
                 <v-col cols="12" md="7" > 
-                    <NuevoPost @clicked="updatePosts" class="mb-10"></NuevoPost>
+                    <NuevoPost @new_post="updatePosts" @send_notification="add_notification" class="mb-10"></NuevoPost>
                     <div v-for="(item, index) in posts" :key="index" class="mb-15">
                         <v-card class="mx-auto" mx-width="90%">
                             <v-card-text class="headline font-weight-bold">
@@ -75,16 +75,8 @@
                 this.$store.commit('set_user_is_logged', false)
                 this.$router.push({name: "Login"})
             },
-            updatePosts(value) {
-                console.log("Vamos a actualizar los posts");
-                var post = {
-                    id: value.data.id,
-                    post: value.data.post, 
-                    user: value.data.user,
-                    created_at: value.data.created_at
-                }
+            updatePosts(post) {
                 this.posts.unshift(post)
-                this.notifications.push("Post was created successfully")
             }, 
             getPosts(){
                 // Cargando los posts
@@ -98,6 +90,9 @@
                     console.log("Ha ocurrido un error");
                     console.log(error);
                 })
+            },
+            add_notification(notification){
+                this.notifications.push(notification)
             }
         },
         

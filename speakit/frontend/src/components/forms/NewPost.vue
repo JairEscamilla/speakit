@@ -13,7 +13,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     export default{
         data() {
             return {
@@ -25,33 +24,20 @@
         methods: {
             sendForm(){
                 this.loader=true;
-                axios.post(this.$store.state.api + 'posts/', {
-                    post: this.post,
-                    user: this.$store.state.user_id,
-                    headers: {
-                        Authorization: 'Token ' + this.$store.state.token
-                    }
-                }).then((data) => {
-                    this.loader = false
-                    this.$emit('clicked', data)
-                    var post = JSON.stringify({'post': this.post, 'username': this.$store.state.username})
-                    this.post = ""
-                    this.connection.send(post)
-                }).catch(() => {
-                    console.log("Ha ocurrido un error");
-                    this.loader = false
-                })
+                var post = JSON.stringify({'post': this.post, 'username': this.$store.state.username})
+                this.post = ""
+                this.connection.send(post)
+                this.$emit('send_notification', 'Post was created successfully')
             }
         },
         created() {
                 this.connection = new WebSocket('ws://localhost:8000/ws/feed/feed/')
-                this.connection.onmessage = function (event) {
-                    console.log("Nuevo post");
-                    console.log(event.data);
+                this.connection.onmessage = (event) => {
+                    this.loader = false
+                    this.$emit('new_post', JSON.parse(event.data))
                 }
 
-                this.connection.onopen = function (event) {
-                    console.log(event);
+                this.connection.onopen = () => {
                     console.log("Successfully connected to echo websocket server...");
                 }
         },
