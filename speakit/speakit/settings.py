@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'knox',
     'corsheaders',
-    'posts'
+    'posts',
+    'channels',
+    'posts_realtime'
 ]
 
 REST_FRAMEWORK = {
@@ -137,3 +139,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ASGI_APPLICATION = 'speakit.routing.application'
+
+ASGI_APPLICATION = 'speakit.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

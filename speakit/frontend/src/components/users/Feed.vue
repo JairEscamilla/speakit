@@ -57,23 +57,16 @@
             return {
                 message: "Welcome",
                 posts: [],
-                notifications: []
+                notifications: [], 
             }
         },
         components: {
             NuevoPost
         },
         created() {
-            axios.get(this.$store.state.api + 'posts/', {
-                headers: {
-                    Authorization: 'Token ' + this.$store.state.token
-                }
-            }).then((response) => {
-                this.posts = response.data
-            }).catch((error) => {
-                console.log("Ha ocurrido un error");
-                console.log(error);
-            })
+            this.getPosts();
+          
+
         },
         methods: {
             logout(){
@@ -92,6 +85,19 @@
                 }
                 this.posts.unshift(post)
                 this.notifications.push("Post was created successfully")
+            }, 
+            getPosts(){
+                // Cargando los posts
+                axios.get(this.$store.state.api + 'posts/', {
+                    headers: {
+                        Authorization: 'Token ' + this.$store.state.token
+                    }
+                }).then((response) => {
+                    this.posts = response.data
+                }).catch((error) => {
+                    console.log("Ha ocurrido un error");
+                    console.log(error);
+                })
             }
         },
         

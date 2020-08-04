@@ -18,7 +18,8 @@
         data() {
             return {
                 loader: false,
-                post: ""
+                post: "", 
+                connection: null
             }
         },
         methods: {
@@ -32,13 +33,27 @@
                     }
                 }).then((data) => {
                     this.loader = false
-                    this.post = ""
                     this.$emit('clicked', data)
+                    var post = JSON.stringify({'post': this.post})
+                    this.post = ""
+                    this.connection.send(post)
                 }).catch(() => {
                     console.log("Ha ocurrido un error");
                     this.loader = false
                 })
             }
+        },
+        created() {
+                this.connection = new WebSocket('ws://localhost:8000/ws/feed/feed/')
+                this.connection.onmessage = function (event) {
+                    console.log("Nuevo post");
+                    console.log(event.data);
+                }
+
+                this.connection.onopen = function (event) {
+                    console.log(event);
+                    console.log("Successfully connected to echo websocket server...");
+                }
         },
     }
 </script>
