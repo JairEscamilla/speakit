@@ -34,7 +34,7 @@
                 }).then((data) => {
                     this.loader = false
                     this.$emit('clicked', data)
-                    var post = JSON.stringify({'post': this.post})
+                    var post = JSON.stringify({'post': this.post, 'username': this.$store.state.username})
                     this.post = ""
                     this.connection.send(post)
                 }).catch(() => {
