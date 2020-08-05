@@ -3,7 +3,7 @@
         <v-toolbar dense :dark="true">
             <v-app-bar-nav-icon></v-app-bar-nav-icon>
     
-            <v-toolbar-title>Title</v-toolbar-title>
+            <v-toolbar-title class="title" @click="redirect_to_feed_or_login">Speakit</v-toolbar-title>
     
             <v-spacer></v-spacer>
     
@@ -31,7 +31,7 @@
                 </template>
                 <v-list>
                     <v-list-item class="items">
-                        <v-list-item-title>My profile</v-list-item-title>
+                        <v-list-item-title @click="redirect_to_profile" >My profile</v-list-item-title>
                     </v-list-item>
                     <v-list-item class="items">
                         <v-list-item-title @click="logout">Logout</v-list-item-title>
@@ -65,13 +65,24 @@
                 this.$store.commit('set_username', '')
                 this.$store.commit('set_user_is_logged', false)
                 this.$router.push({ name: "Login" })
+            },
+            
+            redirect_to_profile(){
+                this.$router.push({ name: "profile", params: { username: this.$store.state.username } })
+            },
+
+            redirect_to_feed_or_login(){
+                if(this.$store.state.user_is_logged)
+                    this.$router.push({ name: "feed" })
+                else 
+                    this.$router.push({ name: "Login" })
             }
         },
     }
 </script>
 
 <style>
-    .items{
+    .items, .title{
         cursor: pointer;
     }
 </style>

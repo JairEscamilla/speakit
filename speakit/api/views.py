@@ -14,6 +14,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from posts.models import Post
+from rest_framework import filters
 # Register API
 
 class RegisterAPI(generics.GenericAPIView):
@@ -67,12 +68,19 @@ class GetUserIdApi(APIView):
         username = data['username']
         response['id'] = User.objects.filter(username=username).first().id 
         return Response(response)
-        
+
+
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
     serializer_class = PostSerializer
     #permission_classes = (IsAuthenticated, )
+
+class PostByUser(generics.ListCreateAPIView):
+    search_fields = ['user__username']
+    filter_backends = (filters.SearchFilter, )
+    queryset = Post.objects.all().order_by("-created_at")
+    serializer_class = PostSerializer
 
 class Prueba(APIView):
     permission_classes = (IsAuthenticated, )
