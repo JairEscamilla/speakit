@@ -23,7 +23,11 @@
         },
         methods: {
             sendForm(){
-                this.loader=true;
+                this.loader = true;
+                if(this.post.length <= 0){
+                    this.loader = false;
+                    return;
+                }
                 var post = JSON.stringify({'post': this.post, 'username': this.$store.state.username})
                 this.post = ""
                 this.connection.send(post)
