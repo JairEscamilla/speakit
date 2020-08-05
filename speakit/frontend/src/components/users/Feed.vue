@@ -45,7 +45,6 @@
             </v-row>
 
         </v-container>
-        <v-btn color="error" @click="logout">Logout</v-btn>
     </div>
 </template>
 
@@ -70,12 +69,6 @@
             this.getPosts();
         },
         methods: {
-            logout(){
-                this.$store.commit('update_auth_token', '')
-                this.$store.commit('set_username', '')
-                this.$store.commit('set_user_is_logged', false)
-                this.$router.push({name: "Login"})
-            },
             updatePosts(post) {
                 this.posts.unshift(post)
             }, 
