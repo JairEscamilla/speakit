@@ -8,7 +8,7 @@
         <v-container>
             <v-row no-glutters>
                 <v-col cols="2" class="links">
-                    asd
+                    Links
                 </v-col>
                 <v-col cols="12" md="7" > 
                     <NuevoPost @new_post="updatePosts" @send_notification="add_notification" class="mb-10"></NuevoPost>
@@ -40,7 +40,7 @@
                     </div>
                 </v-col>
                 <v-col cols="2" class="links">
-                    NUevos links
+                    Nuevos links
                 </v-col>
             </v-row>
 
