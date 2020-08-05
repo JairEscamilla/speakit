@@ -29,6 +29,7 @@
 
 <script>
     import axios from 'axios';
+    import swal from 'sweetalert'
     export default{
         data() {
             return {
@@ -67,7 +68,7 @@
                         this.$router.push({ name: "feed" });
                     })
                 }).catch(() => {
-                    alert("Verifica que tus datos sean correctos");
+                    swal("Verifica que tus datos sean correctos", "", "error");
                     this.loader = false
                 })
             },
