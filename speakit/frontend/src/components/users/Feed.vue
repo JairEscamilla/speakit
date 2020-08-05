@@ -40,7 +40,7 @@
                     </div>
                 </v-col>
                 <v-col cols="2" class="links">
-                    Nuevos links
+                    <LinksUsuarios/>
                 </v-col>
             </v-row>
 
@@ -52,6 +52,8 @@
 <script>
     import axios from 'axios';
     import NuevoPost from '../forms/NewPost.vue'
+    import LinksUsuarios from '../feed/LinksUsuarios.vue'
+
     export default{
         data() {
             return {
@@ -61,12 +63,11 @@
             }
         },
         components: {
-            NuevoPost
+            NuevoPost, 
+            LinksUsuarios
         },
         created() {
             this.getPosts();
-          
-
         },
         methods: {
             logout(){
