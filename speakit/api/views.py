@@ -81,6 +81,7 @@ class PostByUser(generics.ListCreateAPIView):
     filter_backends = (filters.SearchFilter, )
     queryset = Post.objects.all().order_by("-created_at")
     serializer_class = PostSerializer
+    permission_classes = (IsAuthenticated, )
 
 class Prueba(APIView):
     permission_classes = (IsAuthenticated, )

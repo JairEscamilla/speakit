@@ -12,7 +12,7 @@
                             <v-list-item-avatar color="grey"></v-list-item-avatar>
                             <v-list-item-content>
                                 <v-list-item-title class="headline">First name, Last name</v-list-item-title>
-                                <v-list-item-subtitle>@username</v-list-item-subtitle>
+                                <v-list-item-subtitle>@{{username}}</v-list-item-subtitle>
                                 <v-list-item-subtitle class="mt-2 followers">
                                     <p id="followers" class="mr-2">
                                         15 followers 
@@ -38,6 +38,7 @@
 
                     <v-container max-width="90%">
                         <h3>Posts</h3>
+                        <Posts v-bind:username="username"/>
                     </v-container>                    
 
                 </v-col>
@@ -49,6 +50,26 @@
         </v-container>
     </div>
 </template>
+
+<script>
+    import Posts from './Posts.vue'
+    export default{
+        data() {
+            return {
+                username: ""
+            }
+        },
+
+        components: {
+            Posts
+        },
+
+        created() {
+            this.username = this.$store.state.username;
+        },
+
+    }
+</script>
 
 <style>
     .followers{
