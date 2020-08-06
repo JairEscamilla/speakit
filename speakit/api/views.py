@@ -15,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from posts.models import Post
 from rest_framework import filters
+from django.db.models import Q
 # Register API
 
 class RegisterAPI(generics.GenericAPIView):
@@ -82,6 +83,32 @@ class PostByUser(generics.ListCreateAPIView):
     queryset = Post.objects.all().order_by("-created_at")
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticated, )
+
+class SearchUsers(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+
+        user_searched = request.POST.get('user')
+        users = User.objects.filter(
+            Q(username__icontains=user_searched) | 
+            Q(first_name__icontains=user_searched) | 
+            Q(last_name__icontains=user_searched)
+        )
+
+        for user in users:
+            response[user.id] = {
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name
+            }
+        
+        return Response(response)
+
+
+
+
 
 class Prueba(APIView):
     permission_classes = (IsAuthenticated, )
