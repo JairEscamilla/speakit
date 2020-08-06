@@ -39,9 +39,10 @@ const user_is_authenticated = (to, from, next) => {
     component: Profile
   },
   {
-    path: "/search/:search/",
+    path: "/search",
     name: "search",
-    component: SearchResults
+    component: SearchResults,
+    props: (route) => ({ query: route.query.q  })
   }
 ]
 

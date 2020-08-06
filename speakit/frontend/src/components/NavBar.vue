@@ -62,6 +62,9 @@
                 search: ""
             }
         },
+        created() {
+            console.log("Creando componente!")
+        },
 
         methods: {
             logout() {
@@ -83,7 +86,7 @@
             },
 
             search_user(){
-                console.log(this.search);
+                this.$router.push({name: "search", query: {q: this.search}})
             }
         },
     }

@@ -85,12 +85,12 @@ class PostByUser(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, )
 
 class SearchUsers(APIView):
-    permission_classes = (IsAuthenticated, )
 
     def post(self, request, *args, **kwargs):
         response = {}
-
-        user_searched = request.POST.get('user')
+        peticion = request.POST.get('json')
+        data = json.loads(peticion)
+        user_searched = data['user']
         users = User.objects.filter(
             Q(username__icontains=user_searched) | 
             Q(first_name__icontains=user_searched) | 
