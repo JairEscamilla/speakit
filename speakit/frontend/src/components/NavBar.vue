@@ -1,16 +1,19 @@
 <template>
     <v-card color="grey lighten-4" flat tile>
-        <v-toolbar dense :dark="true">
+        <v-toolbar dense :dark="true" height="60">
             <v-app-bar-nav-icon></v-app-bar-nav-icon>
     
             <v-toolbar-title class="title" @click="redirect_to_feed_or_login">Speakit</v-toolbar-title>
     
             <v-spacer></v-spacer>
-    
-            <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
-    
+            
+            <form class="form mt-7" @submit.prevent="search_user">
+                <v-text-field id="search" v-model="search" label="Find a person you know..." solo-inverted></v-text-field>
+                <v-btn type="submit" icon>
+                    <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+            </form>
+
             <v-btn icon>
                 <v-icon>mdi-heart</v-icon>
             </v-btn>
@@ -55,7 +58,8 @@
                 items: [
                     {title: "My profile"},
                     {title: "Logout"}
-                ]
+                ],
+                search: ""
             }
         },
 
@@ -76,6 +80,10 @@
                     this.$router.push({ name: "feed" })
                 else 
                     this.$router.push({ name: "Login" })
+            },
+
+            search_user(){
+                console.log(this.search);
             }
         },
     }
@@ -84,5 +92,11 @@
 <style>
     .items, .title{
         cursor: pointer;
+    }
+    .form{
+        display: flex;
+    }
+    #search{
+        padding: 0 !important;
     }
 </style>

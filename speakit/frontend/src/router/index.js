@@ -5,6 +5,8 @@ import Feed from '../components/users/Feed.vue'
 import Registration from '../components/users/Registration.vue'
 import Profile from '../components/users/Profile.vue'
 import store from '../store.js'
+import SearchResults from '../components/SearchResults.vue'
+
 Vue.use(VueRouter)
 
 const user_is_authenticated = (to, from, next) => {
@@ -35,6 +37,11 @@ const user_is_authenticated = (to, from, next) => {
     path: "/profile/:username/",
     name: "profile",
     component: Profile
+  },
+  {
+    path: "/search/:search/",
+    name: "search",
+    component: SearchResults
   }
 ]
 
