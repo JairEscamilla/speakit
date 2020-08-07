@@ -28,10 +28,10 @@
                         </v-card-text>
                         
                         <v-card-actions class="actions mb-4">
-                            <v-btn text color="deep-purple accent-4">
+                            <v-btn text color="deep-purple accent-4" v-if="username === user_logged">
                                 Edit my profile
                             </v-btn>
-                            <v-btn color="error" class="ml-4 mr-5">Follow</v-btn>
+                            <v-btn color="error" class="ml-4 mr-5" v-if="username != user_logged" :disabled="!user_is_logged">Follow</v-btn>
                         </v-card-actions>
 
                     </v-card>
@@ -56,7 +56,9 @@
     export default{
         data() {
             return {
-                username: ""
+                username: this.$route.params.username,
+                user_logged: this.$store.state.username,
+                user_is_logged: this.$store.state.user_is_logged
             }
         },
 
@@ -65,7 +67,6 @@
         },
 
         created() {
-            this.username = this.$route.params.username;
         },
 
     }
