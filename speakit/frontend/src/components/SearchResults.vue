@@ -27,10 +27,10 @@
                                 </v-card-text>
                     
                                 <v-card-actions class="actions mb-4">
-                                    <v-btn text color="deep-purple accent-4">
+                                    <v-btn text color="deep-purple accent-4" v-on:click="redirect_to_profile(user.username)">
                                         View profile
                                     </v-btn>
-                                    <v-btn color="error" class="ml-4 mr-5" v-bind:disabled="username == user.username">Follow</v-btn>
+                                    <v-btn color="error" class="ml-4 mr-5" v-bind:disabled="username == user.username" v-if="user_is_logged">Follow</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </div>
@@ -52,7 +52,8 @@
         data() {
             return {
                 results: [],
-                username: this.$store.state.username
+                username: this.$store.state.username,
+                user_is_logged: this.$store.user_is_logged
             }
         },
         props: {
@@ -78,6 +79,10 @@
                 .then((data) => {
                     this.results = data
                 })
+            },
+
+            redirect_to_profile(username){
+                this.$router.push({name: "profile", params: {username: username}})
             }
         },
     }

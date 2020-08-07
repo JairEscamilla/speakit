@@ -63,7 +63,6 @@
             }
         },
         created() {
-            console.log("Creando componente!")
         },
 
         methods: {

@@ -65,7 +65,7 @@
         },
 
         created() {
-            this.username = this.$store.state.username;
+            this.username = this.$route.params.username;
         },
 
     }

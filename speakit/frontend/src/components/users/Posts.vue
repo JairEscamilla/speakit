@@ -44,16 +44,12 @@
         },
 
         created() {
-            this.get_user_posts(this.$store.state.username)
+            this.get_user_posts(this.$props.username);
         },
 
         methods: {
             get_user_posts(username){
-                axios.get(this.$store.state.api + 'posts_by_user/?search=' + username, {
-                    headers: {
-                        Authorization: 'Token ' + this.$store.state.token
-                    }
-                }).then((response) => {
+                axios.get(this.$store.state.api + 'posts_by_user/?search=' + username).then((response) => {
                     this.posts = response.data
                 }).catch((error) => {
                     console.log("Ha ocurrido un error");
