@@ -30,7 +30,7 @@
                                     <v-btn text color="deep-purple accent-4" v-on:click="redirect_to_profile(user.username)">
                                         View profile
                                     </v-btn>
-                                    <v-btn color="error" class="ml-4 mr-5" v-bind:disabled="username == user.username" v-if="!user_is_logged">Follow</v-btn>
+                                    <v-btn color="error" class="ml-4 mr-5" v-bind:disabled="username == user.username" v-if="user_is_logged">Follow</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </div>
@@ -53,7 +53,7 @@
             return {
                 results: [],
                 username: this.$store.state.username,
-                user_is_logged: this.$store.user_is_logged
+                user_is_logged: this.$store.state.user_is_logged
             }
         },
         props: {
