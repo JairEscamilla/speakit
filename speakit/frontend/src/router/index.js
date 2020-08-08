@@ -6,6 +6,8 @@ import Registration from '../components/users/Registration.vue'
 import Profile from '../components/users/Profile.vue'
 import store from '../store.js'
 import SearchResults from '../components/SearchResults.vue'
+import EditProfile from '../components/users/EditProfile.vue'
+
 
 Vue.use(VueRouter)
 
@@ -43,6 +45,12 @@ const user_is_authenticated = (to, from, next) => {
     name: "search",
     component: SearchResults,
     props: (route) => ({ query: route.query.q  })
+  },
+  {
+    path: "/user/profile/edit_profile/",
+    name: "editProfile",
+    component: EditProfile,
+    beforeEnter: user_is_authenticated
   }
 ]
 

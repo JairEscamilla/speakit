@@ -28,7 +28,7 @@
                         </v-card-text>
                         
                         <v-card-actions class="actions mb-4">
-                            <v-btn text color="deep-purple accent-4" v-if="username === user_logged">
+                            <v-btn @click="redirect_to_edit_profile" text color="deep-purple accent-4" v-if="username === user_logged">
                                 Edit my profile
                             </v-btn>
                             <v-btn color="error" class="ml-4 mr-5" v-if="username != user_logged" :disabled="!user_is_logged">Follow</v-btn>
@@ -67,6 +67,12 @@
         },
 
         created() {
+        },
+
+        methods: {
+            redirect_to_edit_profile(){
+                this.$router.push({name: "editProfile"})
+            }
         },
 
     }

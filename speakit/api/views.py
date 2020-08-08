@@ -106,6 +106,15 @@ class SearchUsers(APIView):
         return Response(response)
 
 
+class GetUserInfo(APIView):
+    def post(self, request, *args, **kwargs):
+        response = {}
+        peticion = request.POST.get('json')
+        data = json.loads(peticion)
+        username = data['username']
+
+        
+
 
 
 

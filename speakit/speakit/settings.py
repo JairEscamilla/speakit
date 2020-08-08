@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'posts',
     'channels',
-    'posts_realtime'
+    'posts_realtime',
+    'users'
 ]
 
 REST_FRAMEWORK = {
