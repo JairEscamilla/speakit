@@ -16,6 +16,7 @@ from rest_framework import viewsets
 from posts.models import Post
 from rest_framework import filters
 from django.db.models import Q
+from users.models import Profile
 # Register API
 
 class RegisterAPI(generics.GenericAPIView):
@@ -107,13 +108,22 @@ class SearchUsers(APIView):
 
 
 class GetUserInfo(APIView):
+    permission_classes = (IsAuthenticated, )
+
     def post(self, request, *args, **kwargs):
         response = {}
         peticion = request.POST.get('json')
         data = json.loads(peticion)
         username = data['username']
 
-        
+        user = User.objects.filter(username=username).first()
+
+        response['username'] = user.username
+        response['first_name'] = user.first_name
+        response['last_name'] = user.last_name
+        response['profile_description'] = user.profile.profile_description
+
+        return Response(response)
 
 
 
