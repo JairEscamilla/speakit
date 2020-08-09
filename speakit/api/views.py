@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, PostSerializer
+from .serializers import UserSerializer, RegisterSerializer, PostSerializer, UsersInfoSerializer
 from django.contrib.auth import login
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -17,6 +17,8 @@ from posts.models import Post
 from rest_framework import filters
 from django.db.models import Q
 from users.models import Profile
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
 # Register API
 
 class RegisterAPI(generics.GenericAPIView):
@@ -78,6 +80,7 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     #permission_classes = (IsAuthenticated, )
 
+
 class PostByUser(generics.ListCreateAPIView):
     search_fields = ['user__username']
     filter_backends = (filters.SearchFilter, )
@@ -106,27 +109,17 @@ class SearchUsers(APIView):
         
         return Response(response)
 
+class GetUsersInfoApi(viewsets.ModelViewSet):
+    serializer_class = UsersInfoSerializer
+    queryset = User.objects.all()
 
-class GetUserInfo(APIView):
-    permission_classes = (IsAuthenticated, )
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, username=pk)
 
-    def post(self, request, *args, **kwargs):
-        response = {}
-        peticion = request.POST.get('json')
-        data = json.loads(peticion)
-        username = data['username']
+        serializer = UsersInfoSerializer(user)
 
-        user = User.objects.filter(username=username).first()
-
-        response['username'] = user.username
-        response['first_name'] = user.first_name
-        response['last_name'] = user.last_name
-        response['profile_description'] = user.profile.profile_description
-
-        return Response(response)
-
-
-
+        return Response(serializer.data)
 
 class Prueba(APIView):
     permission_classes = (IsAuthenticated, )
