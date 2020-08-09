@@ -8,7 +8,7 @@ const store = new Vuex.Store({
         token: "",
         username: "",
         user_is_logged: false,
-        api: "http://localhost:8000/api/v1.0/",
+        api: "http://192.168.1.79:8000/api/v1.0/",
         user_id: 0,
     },
     mutations: {

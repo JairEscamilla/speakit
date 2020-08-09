@@ -31,11 +31,16 @@
                 var post = JSON.stringify({'post': this.post, 'username': this.$store.state.username})
                 this.post = ""
                 this.connection.send(post)
-                this.$emit('send_notification', 'Post was created successfully')
+                 this.$notify({
+                    group: 'foo',
+                    title: 'New notification',
+                    text: 'Post was created successfully!',
+                    type: 'success'
+                });
             }
         },
         created() {
-                this.connection = new WebSocket('ws://localhost:8000/ws/feed/feed/')
+                this.connection = new WebSocket('ws://192.168.1.79:8000/ws/feed/feed/')
                 this.connection.onmessage = (event) => {
                     this.loader = false
                     this.$emit('new_post', JSON.parse(event.data))

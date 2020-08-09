@@ -98,9 +98,19 @@
                 }).then((response) => {
                     console.log("Respuesta del servidor...");
                     console.log(response);
-                }).catch((error) => {
-                    console.log("Ha ocurrido un error");
-                    console.log(error);
+                    this.$notify({
+                            group: 'foo',
+                            title: 'New notification',
+                            text: 'Your profile has been updated!', 
+                            type: 'success'
+                    });
+                }).catch(() => {
+                    this.$notify({
+                        group: "foo",
+                        title: "New notification",
+                        text: "An error has occurred, try it later",
+                        type: "error"
+                    })
                 })
             }
         },

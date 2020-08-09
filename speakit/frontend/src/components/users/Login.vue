@@ -29,7 +29,6 @@
 
 <script>
     import axios from 'axios';
-    import swal from 'sweetalert'
     export default{
         data() {
             return {
@@ -68,7 +67,12 @@
                         this.$router.push({ name: "feed" });
                     })
                 }).catch(() => {
-                    swal("Verifica que tus datos sean correctos", "", "error");
+                    this.$notify({
+                        group: "foo",
+                        title: "New notification!",
+                        text: "Your credentials are wrong",
+                        type: "error"
+                    })                   
                     this.loader = false
                 })
             },

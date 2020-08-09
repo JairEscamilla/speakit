@@ -13,9 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8080"
-]
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +28,7 @@ SECRET_KEY = '7)_r7**%^rt#2)x3uuf2_f9#%l$wq_qg(o4$-$=&_)^^v+9ai('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.79']
 
 
 # Application definition
