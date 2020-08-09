@@ -112,6 +112,7 @@ class SearchUsers(APIView):
 class GetUsersInfoApi(viewsets.ModelViewSet):
     serializer_class = UsersInfoSerializer
     queryset = User.objects.all()
+    permission_classes = (IsAuthenticated, )
 
     def retrieve(self, request, pk=None):
         queryset = User.objects.all()
