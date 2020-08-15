@@ -67,6 +67,7 @@
         },
 
         created() {
+            console.log(this.username)
         },
 
         methods: {

@@ -112,15 +112,31 @@ class SearchUsers(APIView):
 class GetUsersInfoApi(viewsets.ModelViewSet):
     serializer_class = UsersInfoSerializer
     queryset = User.objects.all()
-    #permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
 
-    '''def retrieve(self, request, pk=None):
+    def retrieve(self, request, pk=None):
         queryset = User.objects.all()
         user = get_object_or_404(queryset, username=pk)
 
         serializer = UsersInfoSerializer(user)
 
-        return Response(serializer.data)'''
+        return Response(serializer.data)
+    
+
+    def update(self, request, pk=None):
+        user = get_object_or_404(User, username=pk)
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.profile.profile_description = request.POST.get("profile.profile_description")
+        
+        user.profile.save()
+        user.save()
+
+        serializer = UsersInfoSerializer(user)
+
+        return Response(serializer.data)
 
 class Prueba(APIView):
     permission_classes = (IsAuthenticated, )
