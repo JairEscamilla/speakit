@@ -66,7 +66,7 @@
 
         methods: {
             get_user_profile_info(){
-                fetch(this.$store.state.api+'get_users_info/' + this.$store.state.user_id + '/', {
+                fetch(this.$store.state.api+'get_users_info/' + this.$store.state.username + '/', {
                     method: 'GET',
                     headers: {
                         Authorization: 'Token ' + this.$store.state.token
@@ -87,7 +87,7 @@
                 if(!this.email_is_valid || this.email.length <= 0)
                     return;
                 
-                axios.put(this.$store.state.api + 'get_users_info/' + this.$store.state.user_id + '/', {
+                axios.put(this.$store.state.api + 'get_users_info/' + this.$store.state.username + '/', {
                     email: this.email,
                     first_name: this.first_name,
                     last_name: this.last_name,
@@ -95,6 +95,10 @@
                         profile_description: this.bio
                     },
                     username: this.$store.state.username
+                }, {
+                    headers: {
+                        Authorization: 'Token ' + this.$store.state.token
+                    }
                 }).then((response) => {
                     console.log("Respuesta del servidor...");
                     console.log(response);

@@ -112,7 +112,7 @@ class SearchUsers(APIView):
 class GetUsersInfoApi(viewsets.ModelViewSet):
     serializer_class = UsersInfoSerializer
     queryset = User.objects.all()
-    permission_classes = (IsAuthenticated, )
+    #permission_classes = (IsAuthenticated, )
 
     def retrieve(self, request, pk=None):
         queryset = User.objects.all()
@@ -125,16 +125,9 @@ class GetUsersInfoApi(viewsets.ModelViewSet):
 
     def update(self, request, pk=None):
         user = get_object_or_404(User, username=pk)
-        user.username = request.POST.get('username')
-        user.email = request.POST.get('email')
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-        user.profile.profile_description = request.POST.get("profile.profile_description")
-        
-        user.profile.save()
-        user.save()
-
-        serializer = UsersInfoSerializer(user)
+        serializer = UsersInfoSerializer(user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
         return Response(serializer.data)
 

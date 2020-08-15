@@ -20,7 +20,11 @@ class ProfileSerializer(serializers.ModelSerializer):
 class UsersInfoSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(many=False)
 
+
+
     def update(self, instance, validated_data):
+        
+        print("QUIERO VER SI AQUI")
 
         try:
             profile_description = validated_data.get('profile').get("profile_description")
