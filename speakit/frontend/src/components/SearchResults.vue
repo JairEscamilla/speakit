@@ -61,10 +61,11 @@
         },
         created() {
             this.getUsers(this.query)
-            console.log(this.username);
         },
-        updated() {
-            this.getUsers(this.query)
+        watch: {
+            query: function(newQuery){
+                this.getUsers(newQuery)
+            }
         },
         methods: {
             getUsers(search){
@@ -77,6 +78,8 @@
                     body: data 
                 }).then((response) => response.json())
                 .then((data) => {
+                    console.log("HEEEERE");
+                    console.log(data);
                     this.results = data
                 })
             },

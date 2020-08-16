@@ -104,7 +104,7 @@ class SearchUsers(APIView):
             response[user.id] = {
                 'username': user.username,
                 'first_name': user.first_name,
-                'last_name': user.last_name
+                'last_name': user.last_name,
             }
         
         return Response(response)
@@ -112,7 +112,6 @@ class SearchUsers(APIView):
 class GetUsersInfoApi(viewsets.ModelViewSet):
     serializer_class = UsersInfoSerializer
     queryset = User.objects.all()
-    #permission_classes = (IsAuthenticated, )
 
     def retrieve(self, request, pk=None):
         queryset = User.objects.all()

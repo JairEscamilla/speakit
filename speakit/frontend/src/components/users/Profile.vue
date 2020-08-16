@@ -11,7 +11,7 @@
                         <v-list-item>
                             <v-list-item-avatar color="grey"></v-list-item-avatar>
                             <v-list-item-content>
-                                <v-list-item-title class="headline">First name, Last name</v-list-item-title>
+                                <v-list-item-title class="headline">{{ first_name }}, {{ last_name }}</v-list-item-title>
                                 <v-list-item-subtitle>@{{username}}</v-list-item-subtitle>
                                 <v-list-item-subtitle class="mt-2 followers">
                                     <p id="followers" class="mr-2">
@@ -24,7 +24,7 @@
                             </v-list-item-content>
                         </v-list-item>
                         <v-card-text>
-                            "Add a description to your speakit profile!"
+                            {{ description }}
                         </v-card-text>
                         
                         <v-card-actions class="actions mb-4">
@@ -53,12 +53,17 @@
 
 <script>
     import Posts from './Posts.vue'
+    import axios from 'axios'
+
     export default{
         data() {
             return {
                 username: this.$route.params.username,
                 user_logged: this.$store.state.username,
-                user_is_logged: this.$store.state.user_is_logged
+                user_is_logged: this.$store.state.user_is_logged,
+                first_name: "",
+                last_name: "",
+                description: ""
             }
         },
 
@@ -67,12 +72,22 @@
         },
 
         created() {
-            console.log(this.username)
+            this.get_user_info(this.username)
         },
 
         methods: {
             redirect_to_edit_profile(){
                 this.$router.push({name: "editProfile"})
+            },
+            
+            get_user_info(username){
+                axios.get(this.$store.state.api + 'get_users_info/' + username + '/').then((response) => {
+                    this.first_name = response.data.first_name.length > 0 ? response.data.first_name : "First name"
+                    this.last_name = response.data.last_name.length > 0 ? response.data.last_name : "Last name"
+                    this.description = response.data.profile.profile_description.length > 0 ? response.data.profile.profile_description : "Add a description to your speakit profile!"
+                }).catch((error) => {
+                    console.log(error);
+                })
             }
         },
 
