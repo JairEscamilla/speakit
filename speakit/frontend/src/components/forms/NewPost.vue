@@ -49,7 +49,6 @@
                             username: info.username
                         }
                     };
-                    console.log(data);
                     this.$emit('new_post', data)
                     this.loader = false
                 }

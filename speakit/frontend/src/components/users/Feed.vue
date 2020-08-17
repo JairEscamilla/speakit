@@ -22,7 +22,7 @@
                                     <v-list-item class="grow">
                                         <v-list-item-avatar color="grey">
                                             <v-img class="elevation-6"
-                                                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light">
+                                                src="https://avatars0.githubusercontent.com/u/25732530?s=60&v=4">
                                             </v-img>
                                         </v-list-item-avatar>
                                         <v-list-item-content>
