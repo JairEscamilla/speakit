@@ -40,6 +40,18 @@
                             </v-card>
                         </div>
                     </div>
+                    <v-banner two-line class="mb-5" v-if="end">
+                        <v-avatar slot="icon" color="deep-purple accent-4" size="40">
+                            <v-icon icon="mdi-lock" color="white">
+                                mdi-checkbox-marked-circle
+                            </v-icon>
+                        </v-avatar>
+                    
+                        <h4>
+                            You have reached the end of the posts
+                        </h4>
+
+                    </v-banner>
                 </v-col>
                 <v-col cols="2" class="links">
                     <LinksUsuarios/>
@@ -62,7 +74,8 @@
                 posts: [],
                 notifications: [], 
                 busy: false,
-                currentPage: 1
+                currentPage: 1,
+                end: false
             }
         },
         components: {
@@ -88,8 +101,10 @@
                     })
                     if(response.data.next != null)
                         this.currentPage += 1
-                    else
+                    else{
                         this.currentPage = -1
+                        this.end = true
+                    }
                     this.busy = false
                 }).catch((error) => {
                     console.log("Ha ocurrido un error");
