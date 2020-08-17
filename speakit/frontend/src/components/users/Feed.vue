@@ -26,7 +26,7 @@
                                             </v-img>
                                         </v-list-item-avatar>
                                         <v-list-item-content>
-                                            <v-list-item-title>Username</v-list-item-title>
+                                            <v-list-item-title>{{ item.user.username  }}</v-list-item-title>
                                         </v-list-item-content>
                                         <v-row align="center" justify="end">
                                             <v-icon class="mr-1">mdi-heart</v-icon>
@@ -85,7 +85,6 @@
                 }).then((response) => {
                     response.data.results.map((post) => {
                         this.posts.push(post)
-                        console.log(post);
                     })
                     if(response.data.next != null)
                         this.currentPage += 1

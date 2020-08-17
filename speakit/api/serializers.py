@@ -23,9 +23,6 @@ class UsersInfoSerializer(serializers.ModelSerializer):
 
 
     def update(self, instance, validated_data):
-        
-        print("QUIERO VER SI AQUI")
-
         try:
             profile_description = validated_data.get('profile').get("profile_description")
             instance.username = validated_data.get('username', instance.username)
@@ -61,9 +58,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
         return user
 
+
+class PostUsernameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User 
+        fields = ("username", )
+
 # Posts serializer
 class PostSerializer(serializers.ModelSerializer):
-
+    user = PostUsernameSerializer(many=False)
     class Meta:
         model = Post
         fields = '__all__'
