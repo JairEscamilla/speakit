@@ -42,8 +42,16 @@
         created() {
                 this.connection = new WebSocket('ws://192.168.1.79:8000/ws/feed/feed/')
                 this.connection.onmessage = (event) => {
+                    var info = JSON.parse(event.data)
+                    var data = {
+                        post: info.post,
+                        user: {
+                            username: info.username
+                        }
+                    };
+                    console.log(data);
+                    this.$emit('new_post', data)
                     this.loader = false
-                    this.$emit('new_post', JSON.parse(event.data))
                 }
 
                 this.connection.onopen = () => {
