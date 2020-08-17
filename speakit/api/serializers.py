@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from posts.models import Post
 from users.models import Profile
+from comments.models import Comment
 
 # User serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -19,9 +20,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UsersInfoSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(many=False)
-
-
-
     def update(self, instance, validated_data):
         try:
             profile_description = validated_data.get('profile').get("profile_description")
@@ -65,9 +63,18 @@ class PostUsernameSerializer(serializers.ModelSerializer):
         model = User 
         fields = ("username", )
 
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    class Meta:
+        model = Comment
+        fields = ('comment', 'user')
+
 # Posts serializer
 class PostSerializer(serializers.ModelSerializer):
     user = PostUsernameSerializer(many=False)
+    comments = CommentSerializer(many=True)
     class Meta:
         model = Post
         fields = '__all__'
