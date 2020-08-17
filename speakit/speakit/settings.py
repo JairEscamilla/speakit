@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'posts',
     'channels',
     'posts_realtime',
-    'users'
+    'users',
+    'comments'
 ]
 
 REST_FRAMEWORK = {
