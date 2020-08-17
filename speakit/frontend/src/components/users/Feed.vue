@@ -77,19 +77,23 @@
                 this.posts.unshift(post)
             }, 
             getPosts(){
-                console.log("Se ejecuta esta funcion");
                 // Cargando los posts
+                if(this.currentPage === -1)
+                    return
                 this.busy = true
                 axios.get(this.$store.state.api + 'posts/?page=' + this.currentPage, {
                     headers: {
                         Authorization: 'Token ' + this.$store.state.token
                     }
                 }).then((response) => {
-                    this.posts.push(response.data.results)
-                    console.log(response.data.results);
-                    this.busy = false
+                    response.data.results.map((post) => {
+                        this.posts.push(post)
+                    })
                     if(response.data.next != null)
                         this.currentPage += 1
+                    else
+                        this.currentPage = -1
+                    this.busy = false
                 }).catch((error) => {
                     console.log("Ha ocurrido un error");
                     console.log(error);
