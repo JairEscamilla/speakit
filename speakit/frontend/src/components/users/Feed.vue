@@ -69,9 +69,6 @@
             NuevoPost, 
             LinksUsuarios
         },
-        created() {
-            //this.getPosts();
-        },
         methods: {
             updatePosts(post) {
                 this.posts.unshift(post)
@@ -88,6 +85,7 @@
                 }).then((response) => {
                     response.data.results.map((post) => {
                         this.posts.push(post)
+                        console.log(post);
                     })
                     if(response.data.next != null)
                         this.currentPage += 1

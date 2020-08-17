@@ -52,20 +52,7 @@
                     this.$store.commit('update_auth_token', this.token)
                     this.$store.commit('set_username', this.form.username)
                     this.$store.commit('set_user_is_logged', true)
-                    var info = {username: this.form.username}
-                    var data = new FormData();
-                    data.append("json", JSON.stringify(info))
-                    fetch(this.$store.state.api + 'get_user_id/', {
-                        method: "POST",
-                        body: data,
-                        headers: {
-                            Authorization: 'Token ' + this.$store.state.token
-                        }
-                    }).then((response) => response.json())
-                    .then((data) => {
-                        this.$store.commit('set_user_id', data.id);
-                        this.$router.push({ name: "feed" });
-                    })
+                    this.$router.push({ name: "feed" });
                 }).catch(() => {
                     this.$notify({
                         group: "foo",

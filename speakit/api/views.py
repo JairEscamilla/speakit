@@ -64,18 +64,6 @@ class ValidateEmailApi(APIView):
         response['validated'] = not User.objects.filter(email=email).exists()
         return Response(response)
 
-class GetUserIdApi(APIView):
-    permission_classes = (IsAuthenticated, )
-    def post(self, request, *args, **kwargs):
-        response = {}
-        peticion = request.POST.get('json')
-        data = json.loads(peticion)
-        username = data['username']
-        response['id'] = User.objects.filter(username=username).first().id 
-        return Response(response)
-
-
-
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 20
