@@ -19,6 +19,7 @@ from django.db.models import Q
 from users.models import Profile
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
+from rest_framework.pagination import PageNumberPagination
 # Register API
 
 class RegisterAPI(generics.GenericAPIView):
@@ -75,9 +76,16 @@ class GetUserIdApi(APIView):
 
 
 
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = "page_size"
+    max_page_size = 20
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
     serializer_class = PostSerializer
+    pagination_class = StandardResultsSetPagination
     #permission_classes = (IsAuthenticated, )
 
 

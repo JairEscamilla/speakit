@@ -78,8 +78,6 @@
                     body: data 
                 }).then((response) => response.json())
                 .then((data) => {
-                    console.log("HEEEERE");
-                    console.log(data);
                     this.results = data
                 })
             },
